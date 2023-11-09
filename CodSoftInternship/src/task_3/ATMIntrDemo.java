@@ -15,17 +15,22 @@ class BankAccount {
     public void deposit(double amount) {
         if (amount > 0) {
             balance += amount;
+            System.out.println("Deposit Successful\n");
+        }else {
+        	System.out.println("Invalid entry!\n");
         }
     }
 
-    public boolean withdraw(double amount) {
-        if (amount > 0 && balance >= amount) {
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+        	System.out.println("Withdeawal Successful\n");
             balance -= amount;
-            return true;
+        }else {
+        System.out.println("Insuffucient Balance\n");
         }
-        return false;
     }
 }
+  
 
 class ATM {
     private BankAccount account;
@@ -43,32 +48,30 @@ class ATM {
     }
 
     public void run() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
         while (true) {
             displayMenu();
-            System.out.print("Enter your choice: ");
-            int choice = scanner.nextInt();
+            System.out.print("\nEnter your choice: ");
+            int choice = sc.nextInt();
 
             switch (choice) {
                 case 1:
-                    System.out.println("Balance: $" + account.getBalance());
+                    System.out.println("Balance: ₹" + account.getBalance());
                     break;
+                    
                 case 2:
-                    System.out.print("Enter the deposit amount: $");
-                    double depositAmount = scanner.nextDouble();
+                    System.out.print("Enter the deposit amount: ₹");
+                    double depositAmount = sc.nextDouble();
                     account.deposit(depositAmount);
-                    System.out.println("Deposited $" + depositAmount);
                     break;
+                    
                 case 3:
-                    System.out.print("Enter the withdrawal amount: $");
-                    double withdrawAmount = scanner.nextDouble();
-                    if (account.withdraw(withdrawAmount)) {
-                        System.out.println("Withdrawn $" + withdrawAmount);
-                    } else {
-                        System.out.println("Insufficient balance or invalid amount.");
-                    }
+                    System.out.print("Enter the withdrawal amount: ₹");
+                    double withdrawAmount = sc.nextDouble();
+                    account.withdraw(withdrawAmount);  
                     break;
+                    
                 case 4:
                     System.out.println("Exiting ATM. Goodbye!");
                     System.exit(0);
@@ -81,8 +84,7 @@ class ATM {
 
 public class ATMIntrDemo {
     public static void main(String[] args) {
-        BankAccount account = new BankAccount(1000.0); // Initial balance
-
+        BankAccount account = new BankAccount(1000.0);
         ATM atm = new ATM(account);
         atm.run();
     }
