@@ -22,9 +22,7 @@ public class GradeCalculator {
         double avgPercent = (totalMarks / (noOfSubjects * 100)) * 100;
 
         String grade = calculateGrade(avgPercent);
-
-        // Display results
-        System.out.println("Total Marks: " + totalMarks);
+        System.out.println("\nTotal Marks: " + totalMarks+ "out of"+ noOfSubjects*100);
         System.out.printf("Average Percentage: %.2f%%\n", avgPercent);
         System.out.println("Grade: " + grade);
 
