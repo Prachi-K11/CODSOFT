@@ -1,31 +1,44 @@
 package task_1;
-
-import java.util.Random;
 import java.util.Scanner;
+import java.util.Random;
+
+class RandomNumber{
+	public static int genNumber(int min, int max) {
+		Random random = new Random();
+		return random.nextInt(max - min + 1) + min;
+	}
+}
 
 public class NumberGuess {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Random random = new Random();
-        int lowerBound = 1;
-        int upperBound = 100;
-        int numberToGuess = random.nextInt(upperBound - lowerBound + 1) + lowerBound;
-        int maxAttempts = 10;
+	public static void main(String[] args) {
+		
+		System.out.println("Welcome to the Number Guessing Game!");
+		
+		Scanner sc = new Scanner(System.in);
+		int minValue, maxValue;
+        int maxAttempts = 3;
         int attempts = 0;
         int roundsWon = 0;
+        int noOfRounds = 0;
 
         boolean playAgain = true;
 
-        System.out.println("Welcome to the Number Guessing Game!");
-        System.out.println("I've chosen a random number between " + lowerBound + " and " + upperBound);
-
         while (playAgain) {
+        	
+        	System.out.println("Enter the minimum number : ");
+    		minValue = sc.nextInt();
+    		
+    		System.out.println("Enter the maximum number : ");
+    		maxValue = sc.nextInt();
+
+            int numberToGuess = RandomNumber.genNumber(minValue, maxValue);
+            
             attempts = 0;
             int guess;
 
             while (attempts < maxAttempts) {
                 System.out.print("Enter your guess (attempt " + (attempts + 1) + "): ");
-                guess = scanner.nextInt();
+                guess = sc.nextInt();
                 attempts++;
 
                 if (guess == numberToGuess) {
@@ -34,23 +47,28 @@ public class NumberGuess {
                     break;
                 } else if (guess < numberToGuess) {
                     System.out.println("Try a higher number.");
-                } else {
+                } else if(guess > numberToGuess){
                     System.out.println("Try a lower number.");
+                } else {
+                	System.out.println("Try guessing the number within given range!!");
                 }
             }
 
-            if (attempts >= maxAttempts) {
+            if (attempts > maxAttempts) {
                 System.out.println("Sorry, you've reached the maximum number of attempts. The correct number was " + numberToGuess);
             }
 
             System.out.print("Do you want to play again? (yes/no): ");
-            String playAgainResponse = scanner.next().toLowerCase();
+            String playAgainResponse = sc.next().toLowerCase();
             playAgain = playAgainResponse.equals("yes");
+            
             if (playAgain) {
-                numberToGuess = random.nextInt(upperBound - lowerBound + 1) + lowerBound;
+                numberToGuess = RandomNumber.genNumber(minValue, maxValue);
             }
+            noOfRounds++;
         }
 
-        System.out.println("Thanks for playing! You won " + roundsWon + " round(s).");
-    }
+        System.out.println("Thanks for playing! You won " + roundsWon + " round(s) out of " + noOfRounds);
+	}
+
 }
